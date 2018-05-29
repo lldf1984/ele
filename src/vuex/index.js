@@ -65,20 +65,24 @@ const getters = {
             price = getters.total,
             minStr = '¥0元起送',
             delivery = '另需配送费¥0元',
-            classname = false;
+            classname = false,
+            minPrice = 0,
+            deliveryPrice = 0;
         if(seller){
+            minPrice = seller.minPrice || 0;
+            deliveryPrice = seller.deliveryPrice || 0;
             if(price == 0){
-                minStr = '¥' + seller.minPrice + '元起送';
+                minStr = '¥' + minPrice + '元起送';
                 classname = false;
-                delivery = '另需配送费¥' + seller.deliveryPrice + '元';
-            }else if(seller.minPrice - price > 0){
-                minStr = '还差' +  (seller.minPrice - price) + '元起送';
+                delivery = '另需配送费¥' + deliveryPrice + '元';
+            }else if(minPrice - price > 0){
+                minStr = '还差' +  (minPrice - price) + '元起送';
                 classname = false;
-                delivery = '另需配送费¥' + seller.deliveryPrice + '元';
+                delivery = '另需配送费¥' + deliveryPrice + '元';
             }else{
                 minStr = '去结算';
                 classname = true;
-                delivery = '另需配送费¥' + seller.deliveryPrice + '元';
+                delivery = '另需配送费¥' + deliveryPrice + '元';
             }
         }
         

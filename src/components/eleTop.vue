@@ -24,8 +24,7 @@
     <div class="bulletin" v-show="isShow">
       <h2>{{seller.name}}</h2>
       <div class="star-box">
-        <span class="star" v-for="num in star"></span>
-        <span class="star off" :class="{'half': num == 1 && !ustar}" v-for="num in (5 - star)"></span>
+        <ele-star :score="seller.score" size="big"></ele-star>
       </div>
       <dl v-if="seller.supports && seller.supports.length > 0">
         <dt>
@@ -55,12 +54,16 @@
 </template>
 
 <script>
+import eleStar from './eleStar'
 export default {
   name: 'eleTop',
   data () {
     return {
       isShow: false
     }
+  },
+  components:{
+    eleStar
   },
   props:{
     seller: {
@@ -69,16 +72,6 @@ export default {
   },
   created(){
     this.classMap = ['decrease', 'discount', 'guarantee', 'invoice', 'special'];
-  },
-  computed:{
-    star(){
-      let score = this.seller.score || 0;
-      return parseInt(score);
-    }, 
-    ustar(){
-      let score = this.seller.score || 0;
-      return parseInt(score) == score;
-    }
   }
 }
 </script>
@@ -103,15 +96,6 @@ export default {
     text-align center
   .star-box
     margin-top 16px
-    height 24px
-    text-align center
-    .star
-      ele-icon(24px, star48_on)
-      margin 0 10px
-      &.off
-        bg-image(star48_off)
-      &.half
-        bg-image(star36_half)
   dl
     dt
       position relative
